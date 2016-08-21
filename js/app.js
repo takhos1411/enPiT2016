@@ -2,12 +2,15 @@
 (function () {
 
     /* ---------------------------------- Local Variables ---------------------------------- */
-	var homeTpl = Handlebars.compile($("#home-tpl").html()); 
-	var employeeListTpl = Handlebars.compile($("#employee-list-tpl").html()); 
+	//var homeTpl = Handlebars.compile($("#home-tpl").html()); 
+	HomeView.prototype.template = Handlebars.compile($("#home-tpl").html()); 
+	//var employeeListTpl = Handlebars.compile($("#employee-list-tpl").html()); 
+	EmployeeListView.prototype.template = Handlebars.compile($("#employee-list-tpl").html()); 
     var service = new EmployeeService();
     service.initialize().done(function () {
-		renderHomeView();
-        console.log("Service initialized");
+		//renderHomeView();
+        //console.log("Service initialized");
+		$('body').html(new HomeView(service).render().$el); 
     });
 
     /* --------------------------------- Event Registration -------------------------------- */
@@ -33,9 +36,10 @@
 */
 
     /* ---------------------------------- Local Functions ---------------------------------- */
-    function findByName() {
-        service.findByName($('.search-key').val()).done(function (employees) {
 /*
+	 function findByName() {
+        service.findByName($('.search-key').val()).done(function (employees) {
+
             var l = employees.length;
             var e;
             $('.employee-list').empty();
@@ -43,21 +47,23 @@
                 e = employees[i];
                 $('.employee-list').append('<li><a href="#employees/' + e.id + '">' + e.firstName + ' ' + e.lastName + '</a></li>');
             }
-*/
 			 $('.content').html(employeeListTpl(employees)); 
         });
     }
+*/
 
-	function renderHomeView() {
 /*
+	function renderHomeView() {
+
 		var html =
 			"<h1>Directory</h1>" +
 			"<input class='search-key' type='search' placeholder='Enter name'/>" +
 			"<ul class='employee-list'></ul>";
 		$('body').html(html);
-*/
+
 		$('body').html(homeTpl()); 
 		$('.search-key').on('keyup', findByName);
 	}
+*/
 
 }());
